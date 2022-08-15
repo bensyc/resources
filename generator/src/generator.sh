@@ -9,7 +9,8 @@ WORK_DIR=$(pwd)$'/dist/'
 OLD_SUB="----"
 OLD_TYPE="xxxx"
 
-mkdir -p $WORK_DIR > /dev/null 2>&1
+rm -r $WORK_DIR* > /dev/null 2>&1
+mkdir -p $WORK_DIR $WORK_DIR$'png' $WORK_DIR$'svg' $WORK_DIR$'json' > /dev/null 2>&1
 cp $CUR_DIR"BENSYC_VECTOR_OVERLAY.svg" $WORK_DIR"BENSYC_VECTOR_OVERLAY_"$INDEX".svg"
 
 NEW_SUB=$INDEX

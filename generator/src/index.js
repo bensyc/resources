@@ -3,18 +3,18 @@ import { exec } from 'child_process';
 import util from 'util';
 
 const execPromise = util.promisify(exec);
-let range = [0, 99];
+let range = [0, 3];
 
 for (var subdomain = range[0]; subdomain < range[1] + 1; subdomain++) {
   let command = `bash ./src/generator.sh ${subdomain}`;
   try {
     const {stdout, stderr} = await execPromise(command);
-    console.log(`Subdomain ${subdomain}.bensyc.eth : ` + stdout);
+    console.log(`CID ${subdomain}.bensyc.eth avatar (${subdomain}.png): ` + stdout);
     const content = {
       "name": `${subdomain}.BoredENSYachtClub.eth`,
       "description": `Bored ENS Yacht Club member`,
       "external_url": `https://${subdomain}.boredensyachtclub.eth.limo`,
-      "image": `https://ipfs.io/ipfs/${stdout.split(' ')[0]}`,
+      "image": `ipfs://${stdout.split(' ')[0]}`,
       "attributes": [
         {
           "value": `${stdout.split(' ')[1]}`
@@ -30,3 +30,10 @@ for (var subdomain = range[0]; subdomain < range[1] + 1; subdomain++) {
     console.log(error);
   }
 }
+
+
+console.log('Pinning to IPFS ...');
+let command = `ipfs add -r ./dist/json`;
+const {stdout, stderr} = await execPromise(command);
+let repo = stdout.split('\n')[stdout.split('\n').length - 2].split(' ')[1]
+console.log('JSON Repo CID: ' + repo);
