@@ -64,7 +64,9 @@ def isPrime(num):
 val = sys.argv[1]
 num = int(val)
 
-if isPrime(num) or num <= 9:
+if num == 0:
+    print('Root')
+elif isPrime(num) or 0 < num <= 9:
     print('Rainbow')
 elif isPalindrome(val):
     print('Crystal')
